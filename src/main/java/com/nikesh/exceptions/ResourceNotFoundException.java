@@ -1,4 +1,4 @@
-package com.nikesh.exception;
+package com.nikesh.exceptions;
 
 import java.io.Serial;
 

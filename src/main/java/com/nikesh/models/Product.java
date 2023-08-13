@@ -16,11 +16,12 @@ import java.util.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@Table(name = "tbl_product")
 public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     private String name;
     private String description;
@@ -36,7 +37,7 @@ public class Product {
                     CascadeType.PERSIST,
                     CascadeType.MERGE
             })
-    @JoinTable(name = "product_categories",
+    @JoinTable(name = "tbl_product_categories",
         joinColumns = {
             @JoinColumn(name = "product_id")
         },

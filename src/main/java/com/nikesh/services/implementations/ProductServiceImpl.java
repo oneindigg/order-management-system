@@ -1,6 +1,8 @@
 package com.nikesh.services.implementations;
 
-import com.nikesh.exception.ResourceNotFoundException;
+import com.nikesh.dto.product.ProductDTO;
+import com.nikesh.dto.product.ProductDTOMapper;
+import com.nikesh.exceptions.ResourceNotFoundException;
 import com.nikesh.models.Category;
 import com.nikesh.models.Product;
 import com.nikesh.repositories.CategoryRepository;
@@ -11,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -19,9 +22,13 @@ public class ProductServiceImpl implements ProductService {
 
    private final ProductRepository productRepository;
    private final CategoryRepository categoryRepository;
+   private final ProductDTOMapper productDTOMapper;
+
     @Override
-    public List<Product> list() {
-        return productRepository.findAll();
+    public List<ProductDTO> list() {
+        return productRepository.findAll()
+                .stream()
+                .map(productDTOMapper).collect(Collectors.toList());
     }
 
     @Override
@@ -30,19 +37,8 @@ public class ProductServiceImpl implements ProductService {
         for(Category category: product.getCategories()){
             categories.add(categoryRepository.findById(category.getId()).orElseThrow(() -> new ResourceNotFoundException("No such category found")));
         }
-        return productRepository.save( new Product(
-                0L,
-                product.getName(),
-                product.getDescription(),
-                product.getSellingPrice(),
-                product.getCostPerItem(),
-                product.getQuantity(),
-                product.getProductSku(),
-                product.getProductImageUrl(),
-                product.getColor(),
-                product.getSize(),
-                categories)
-        );
+        product.setCategories(categories);
+        return productRepository.save(product);
     }
 
     @Override

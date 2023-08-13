@@ -1,6 +1,6 @@
 package com.nikesh.services.implementations;
 
-import com.nikesh.exception.ResourceNotFoundException;
+import com.nikesh.exceptions.ResourceNotFoundException;
 import com.nikesh.models.Category;
 import com.nikesh.models.Product;
 import com.nikesh.repositories.CategoryRepository;
