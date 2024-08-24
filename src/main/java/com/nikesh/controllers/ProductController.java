@@ -1,6 +1,6 @@
 package com.nikesh.controllers;
 
-import com.nikesh.models.Category;
+import com.nikesh.dto.product.ProductDTO;
 import com.nikesh.models.Product;
 import com.nikesh.models.Response;
 import com.nikesh.services.ProductService;
@@ -37,7 +37,7 @@ public class ProductController {
 
     @GetMapping
     public ResponseEntity<Response> list(){
-        List<Product> productList = this.productService.list();
+        List<ProductDTO> productList = this.productService.list();
         return new ResponseEntity<>(
                 Response.builder()
                         .timeStamp(LocalDateTime.now())
